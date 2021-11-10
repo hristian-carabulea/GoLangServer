@@ -11,6 +11,12 @@ import (
 
 // https://golang.org
 // https://golang.org/doc/code
+// to compile for Windows on Windows, open powershell as admin and run: 
+//		set GOARCH=amd64
+//		set GOOS=windows
+// to compile for Linux on Windows, open powershell as admin and run: 
+//		set GOARCH=amd64
+//		set GOOS=linux
 // To compile Windows 32-bit, enter in bash before building: export GOOS=windows GOARCH=386.
 // To compile Windows 64-bit, enter in bash before building: export GOOS=windows GOARCH=amd64.
 // Rename files from xxxx to xxxx.exe, and run them from command line or by double clicking in file manager.
@@ -67,7 +73,7 @@ func main() {
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(webroot))))
 
 	log.Println("starting the server in webroot <" + webroot + ">")
-	log.Println("starging the server at address <" + ip + ":" + strconv.Itoa(port) + ">")
+	log.Println("starting the server at address <" + ip + ":" + strconv.Itoa(port) + ">")
 
 	if port == 80 {
 		fmt.Println("you can call now: " + schema + "://" + ip)
