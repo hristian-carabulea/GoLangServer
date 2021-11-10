@@ -13,9 +13,13 @@ import (
 // https://golang.org/doc/code
 // to compile for Windows on Windows, open powershell as admin and run: 
 //		$Env:GOOS = "windows"; $Env:GOARCH = "amd64"
+// to see the environment settings type
+//		go env	
 //
 // to compile for Linux on Windows, open powershell as admin and run: 
 //		$Env:GOOS = "linux"; $Env:GOARCH = "amd64"
+// to see the environment settings type
+//		go env	
 //
 // To compile Windows 32-bit, enter in bash before building: export GOOS=windows GOARCH=386.
 // To compile Windows 64-bit, enter in bash before building: export GOOS=windows GOARCH=amd64.
@@ -73,7 +77,11 @@ func main() {
 
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(webroot))))
 
-	path, err := os.Executable()
+// path for current executable
+//		path, err := os.Executable()
+
+// path for current directory:
+	path, err := os.Getwd()
 	if err != nil {
 			log.Println(err)
 	}
