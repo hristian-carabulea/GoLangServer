@@ -12,11 +12,11 @@ import (
 // https://golang.org
 // https://golang.org/doc/code
 // to compile for Windows on Windows, open powershell as admin and run: 
-//		set GOARCH=amd64
-//		set GOOS=windows
+//		$Env:GOOS = "windows"; $Env:GOARCH = "amd64"
+//
 // to compile for Linux on Windows, open powershell as admin and run: 
-//		set GOARCH=amd64
-//		set GOOS=linux
+//		$Env:GOOS = "linux"; $Env:GOARCH = "amd64"
+//
 // To compile Windows 32-bit, enter in bash before building: export GOOS=windows GOARCH=386.
 // To compile Windows 64-bit, enter in bash before building: export GOOS=windows GOARCH=amd64.
 // Rename files from xxxx to xxxx.exe, and run them from command line or by double clicking in file manager.
@@ -61,7 +61,8 @@ func init() {
 	flag.StringVar(&schema, "schema", "http", "schema default is \"http\"")
 	flag.StringVar(&cert, "cert", "", "cert default is \"\"")
 	flag.StringVar(&key, "key", "", "key default is \"\"")
-	flag.StringVar(&webroot, "webroot", ".", "webroot default is \".\"")
+	
+	//flag.StringVar(&webroot, "webroot", ".", "webroot default is \".\"")
 	flag.StringVar(&ip, "ip", "127.0.0.1", "ip default is \"127.0.0.1\"")
 	flag.IntVar(&port, "port", 8889, "port default is \"8889\"")
 }
@@ -72,7 +73,11 @@ func main() {
 
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(webroot))))
 
-	log.Println("starting the server in webroot <" + webroot + ">")
+	path, err := os.Executable()
+	if err != nil {
+			log.Println(err)
+	}
+	log.Println("starting the server in webroot <" + path + ">")
 	log.Println("starting the server at address <" + ip + ":" + strconv.Itoa(port) + ">")
 
 	if port == 80 {
